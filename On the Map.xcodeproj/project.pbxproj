@@ -13,6 +13,8 @@
 		F8D3F4421CA6D89B0018E11F /* On_the_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F4401CA6D89B0018E11F /* On_the_Map.xcdatamodeld */; };
 		F8D3F4441CA6D89B0018E11F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3F4431CA6D89B0018E11F /* Assets.xcassets */; };
 		F8D3F4471CA6D89B0018E11F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3F4451CA6D89B0018E11F /* LaunchScreen.storyboard */; };
+		F8D3F4511CA706AA0018E11F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F4501CA706AA0018E11F /* Constants.swift */; };
+		F8D3F4531CA7077A0018E11F /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F4521CA7077A0018E11F /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		F8D3F4431CA6D89B0018E11F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "On the Map/Assets.xcassets"; sourceTree = "<group>"; };
 		F8D3F4461CA6D89B0018E11F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8D3F4481CA6D89B0018E11F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8D3F4501CA706AA0018E11F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F8D3F4521CA7077A0018E11F /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,9 +44,9 @@
 		F8D3F42D1CA6D89B0018E11F = {
 			isa = PBXGroup;
 			children = (
+				F8D3F4381CA6D89B0018E11F /* On the Map */,
 				F8D3F44F1CA6DB430018E11F /* View Controllers */,
 				F8D3F44E1CA6DB370018E11F /* Assets */,
-				F8D3F4381CA6D89B0018E11F /* On the Map */,
 				F8D3F4371CA6D89B0018E11F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +66,8 @@
 				F8D3F4451CA6D89B0018E11F /* LaunchScreen.storyboard */,
 				F8D3F4481CA6D89B0018E11F /* Info.plist */,
 				F8D3F4401CA6D89B0018E11F /* On_the_Map.xcdatamodeld */,
+				F8D3F4501CA706AA0018E11F /* Constants.swift */,
+				F8D3F4521CA7077A0018E11F /* GCDBlackBox.swift */,
 			);
 			path = "On the Map";
 			sourceTree = "<group>";
@@ -158,6 +164,8 @@
 				F8D3F43C1CA6D89B0018E11F /* LoginViewController.swift in Sources */,
 				F8D3F4421CA6D89B0018E11F /* On_the_Map.xcdatamodeld in Sources */,
 				F8D3F43A1CA6D89B0018E11F /* AppDelegate.swift in Sources */,
+				F8D3F4511CA706AA0018E11F /* Constants.swift in Sources */,
+				F8D3F4531CA7077A0018E11F /* GCDBlackBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +316,7 @@
 				F8D3F44D1CA6D89B0018E11F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
