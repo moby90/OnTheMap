@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "map-1.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
       "filename" : "map.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "map-1-1.pdf"
     }
   ],
   "info" : {
