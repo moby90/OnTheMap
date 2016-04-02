@@ -12,6 +12,30 @@ import UIKit
 
 struct Constants {
     
+    static let UdacityBaseURL: String = "https://www.udacity.com/api/session"
+    
+    // MARK: - JSON Body Keys
+    struct JSONBodyKeys {
+        // udacity
+        static let Udacity = "udacity"
+        static let Username = "username"
+        static let Password = "password"
+        
+        // parse
+        static let UniqueKey = "uniqueKey"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+    }
+    
+    struct RequestToServer {
+        static let udacity : String = "udacity"
+        static let parse : String = "parse"
+    }
+    
     // MARK: UI
     struct UI {
         static let LoginColorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor

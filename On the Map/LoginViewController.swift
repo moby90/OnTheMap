@@ -22,25 +22,90 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     
     @IBAction func signUpPressed(sender: UIButton) {
+        // set url
+        let signUpURL = "https://www.udacity.com/account/auth#!/signup"
+        // open url in browser
+        UIApplication.sharedApplication().openURL(NSURL(string: signUpURL)!)
     }
     
     @IBAction func loginFacebookPressed(sender: UIButton) {
+        //TODO implement facebook login!
+        //Currently for debugging
+        self.goToNextView()
+        //Only debugging purpose
     }
 
     @IBAction func loginPressed(sender: UIButton) {
         
-        userDidTapView(self)
-        
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty."
         } else {
-            setUIEnabled(false)
+                setUIEnabled(false)
+            
         }
+        userLogin()
+    }
+    
+    private func userLogin() {
+        
+        guard let email = usernameTextField.text else {
+            print("Unable to read email address")
+            return
+        }
+        
+        guard let password = passwordTextField.text else {
+            print("Unable to read password.")
+            return
+        }
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: Constants.UdacityBaseURL)!)
+        
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { data, response, error in
+            
+            func displayError(error: String, debugLabelText: String? = nil) {
+                print(error)
+                performUIUpdatesOnMain {
+                    self.setUIEnabled(true)
+                    self.debugTextLabel.text = debugLabelText
+                }
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                displayError("There was an error with your request: \(error)", debugLabelText: "Could not connect to the internet.")
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode != 403 else {
+                displayError("There was an statusCode issue. \(response)", debugLabelText: "Username or Password wrong.")
+                return
+            }
+            
+            guard let data = data else {
+                displayError("No data was returned by the request!")
+                return
+            }
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            
+            
+        }
+        task.resume()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let sessionConfig: NSURLSessionConfiguration = appDelegate.sharedSession.configuration
+        sessionConfig.timeoutIntervalForRequest = 1.0;
+        sessionConfig.timeoutIntervalForResource = 1.0;
         configureUI()
     }
     
@@ -50,6 +115,11 @@ class LoginViewController: UIViewController {
             self.setUIEnabled(true)
             // Hier wird weitergeleitet zum nächsten View
         }
+    }
+    
+    private func goToNextView() {
+        let nc = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavigationController") as! UINavigationController
+        self.presentViewController(nc, animated: true, completion: nil)
     }
 }
 
@@ -92,17 +162,6 @@ extension LoginViewController: UITextFieldDelegate {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
-    }
-    
-    private func resignIfFirstResponder(textField: UITextField) {
-        if textField.isFirstResponder() {
-            textField.resignFirstResponder()
-        }
-    }
-    
-    @IBAction func userDidTapView(sender: AnyObject) {
-        resignIfFirstResponder(usernameTextField)
-        resignIfFirstResponder(passwordTextField)
     }
 }
 
