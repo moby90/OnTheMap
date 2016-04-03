@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginFacebookPressed(sender: UIButton) {
         //TODO implement facebook login!
         //Currently for debugging
-        self.goToNextView()
+        //self.goToNextView()
         //Only debugging purpose
     }
 
