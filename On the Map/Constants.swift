@@ -54,6 +54,7 @@ struct Constants {
         static let LoginColorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
         static let GreyColor = UIColor(red: 0.702, green: 0.863, blue: 0.929, alpha:1.0)
         static let BlueColor = UIColor(red: 0.0, green:0.502, blue:0.839, alpha: 1.0)
+        static let LoginBlue = UIColor(red: 63/255, green: 116/255, blue: 167/255, alpha: 1.0)
     }
 }
 

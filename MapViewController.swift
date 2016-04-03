@@ -100,10 +100,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     appDelegate.usersData = usersData
                     UdacityClient.sharedInstance().createAnnotations(usersData, mapView: self.map)
                 })
-            } else {
-                if error != nil {
-                    //UdacityClient.sharedInstance().showAlert(error!, viewController: self)
-                }
             }
         }
     }
@@ -111,5 +107,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @objc func setNewPin()
     {
         print("setNewPin")
+        let postController:UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("postView") as! UserPostViewController
+        self.presentViewController(postController, animated: true, completion: nil)
     }
 }
