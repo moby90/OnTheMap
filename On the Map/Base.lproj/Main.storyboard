@@ -222,7 +222,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Aa-tT-MqT" userLabel="Link View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Aa-tT-MqT" userLabel="Link View">
                                 <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFo-Hj-W5T" userLabel="Link Area View">
@@ -233,7 +233,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="tug-Wd-Vfl"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -245,9 +245,21 @@
                                             <constraint firstItem="qgP-En-VYk" firstAttribute="leading" secondItem="EFo-Hj-W5T" secondAttribute="leading" id="ulQ-MZ-Sa3"/>
                                         </constraints>
                                     </view>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-TZ-WPe">
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-TZ-WPe">
                                         <rect key="frame" x="0.0" y="180" width="600" height="376"/>
                                     </mapView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b32-2k-hua">
+                                        <rect key="frame" x="214" y="476" width="171" height="36"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="171" id="BnZ-3z-OJR"/>
+                                            <constraint firstAttribute="height" constant="36" id="hnV-m1-n2X"/>
+                                        </constraints>
+                                        <state key="normal" title="Submit"/>
+                                        <connections>
+                                            <action selector="submit:" destination="L4k-zS-laF" eventType="touchUpInside" id="hir-mb-KTl"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -259,6 +271,9 @@
                                     <constraint firstItem="EFo-Hj-W5T" firstAttribute="centerX" secondItem="5Aa-tT-MqT" secondAttribute="centerX" id="eEb-Y2-hwA"/>
                                     <constraint firstAttribute="trailing" secondItem="EFo-Hj-W5T" secondAttribute="trailing" id="t7v-aV-v7g"/>
                                     <constraint firstItem="EFo-Hj-W5T" firstAttribute="top" secondItem="5Aa-tT-MqT" secondAttribute="top" id="uvl-uu-g6i"/>
+                                    <constraint firstItem="b32-2k-hua" firstAttribute="centerX" secondItem="5Aa-tT-MqT" secondAttribute="centerX" id="vx1-X4-YMm"/>
+                                    <constraint firstAttribute="bottom" secondItem="l2W-TZ-WPe" secondAttribute="bottom" id="wT0-xc-UT6"/>
+                                    <constraint firstAttribute="bottom" secondItem="b32-2k-hua" secondAttribute="bottom" constant="44" id="yXp-7F-0sY"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Y2-Gb-vM7" userLabel="Show On The Map View">
@@ -359,10 +374,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="linkSubView" destination="5Aa-tT-MqT" id="Sah-74-FK1"/>
                         <outlet property="linkTextField" destination="qgP-En-VYk" id="bfl-Sl-opU"/>
-                        <outlet property="linkView" destination="5Aa-tT-MqT" id="aYk-eS-bHY"/>
                         <outlet property="locationTextField" destination="9m2-5b-ggN" id="jwi-qq-DpF"/>
-                        <outlet property="showOnTheMapSubView" destination="QMG-4m-h6H" id="d11-ps-YxC"/>
+                        <outlet property="mapView" destination="l2W-TZ-WPe" id="QNq-gS-Qaj"/>
+                        <outlet property="showOnTheMapSubView" destination="4Y2-Gb-vM7" id="paP-i5-ohe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="INA-pN-FG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -372,7 +388,7 @@
         <!--User List-->
         <scene sceneID="USE-X2-SiU">
             <objects>
-                <tableViewController title="User List" id="BeE-Hy-NQk" customClass="ListTableViewControll" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="User List" id="BeE-Hy-NQk" customClass="ListTableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9ZG-mn-Z1w">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -396,7 +412,6 @@
                     <navigationItem key="navigationItem" id="yWV-ft-4SC"/>
                     <connections>
                         <outlet property="studentTableView" destination="9ZG-mn-Z1w" id="cma-XS-loZ"/>
-                        <outlet property="tableView" destination="9ZG-mn-Z1w" id="5IU-Lp-00j"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qlr-ee-UzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

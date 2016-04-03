@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ListTableViewControll: UITableViewController {
+class ListTableViewController: UITableViewController {
     @IBOutlet var studentTableView: UITableView!
     
     var students: [StudentInformation] = ParseClient.sharedInstance().studentLocations
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        populateListTableView()
+        self.populateListTableView()
     }
     
     func populateListTableView() {

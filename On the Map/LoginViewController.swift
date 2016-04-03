@@ -94,6 +94,19 @@ class LoginViewController: UIViewController {
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            
+            let parsedResult = try! NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments) as! NSDictionary
+            
+            guard (parsedResult["error"] == nil) else {
+                print(parsedResult["error"])
+                return
+            }
+            
+            guard let registered = parsedResult["account"] as? NSDictionary else {
+                return
+            }
+            UdacityClient.sharedInstance().uniqueID = registered["key"] as! String
+            UdacityClient.sharedInstance().getUserData()
             self.completeLogin()
             
             

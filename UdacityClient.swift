@@ -12,6 +12,10 @@ import MapKit
 
 class UdacityClient : NSObject {
     
+    var uniqueID: String = ""
+    var userFirstName: String = ""
+    var userLastName: String = ""
+    
     var session: NSURLSession
     
     override init() {
@@ -159,6 +163,30 @@ class UdacityClient : NSObject {
             
             mapView.addAnnotation(annotation)
         }
+    }
+    
+    func getUserData() {
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(uniqueID)")!)
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil {
+                return
+            } else {
+                guard let data = data else {
+                    return
+                }
+                
+                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+                let parsedResult = try! NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments) as! NSDictionary
+                guard let user = parsedResult["user"] as? NSDictionary else {
+                    return
+                }
+                
+                self.userFirstName = user["first_name"] as! String
+                self.userLastName = user["last_name"] as! String
+                
+            }
+        }
+        task.resume()
     }
 }
 

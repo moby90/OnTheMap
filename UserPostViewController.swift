@@ -7,13 +7,26 @@
 //
 
 import UIKit
+import MapKit
 
 class UserPostViewController: UIViewController {
+    
+    var firstName: String = UdacityClient.sharedInstance().userFirstName
+    var lastName: String = UdacityClient.sharedInstance().userLastName
+    var uniqueID: String = UdacityClient.sharedInstance().uniqueID
+    
+    var locationString: String = ""
+    var locationLatitude: String = ""
+    var locationLongitude: String = ""
+    var mediaURL: String = ""
     
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet var showOnTheMapSubView: UIView!
-    @IBOutlet weak var linkView: UIView!
+    @IBOutlet weak var linkSubView: UIView!
+    @IBOutlet weak var mapView: MKMapView!
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var keyboardOnScreen = false
     var mKeyboardHeight: CGFloat = 0.0
@@ -31,20 +44,18 @@ class UserPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        subscribeToKeyboardNotifications()
         configureLocationTextField(locationTextField)
         configureLinkTextField(linkTextField)
     }
     
     func setOnTheMapSubView() {
-        subscribeToKeyboardNotifications()
-        linkView.hidden = true
+        linkSubView.hidden = true
         showOnTheMapSubView.hidden = false
     }
     
     func setLinkSubView() {
-        unsubscribeToKeyboardNotifications()
-        linkView.hidden = false
+        linkSubView.hidden = false
         showOnTheMapSubView.hidden = true
     }
     
@@ -59,6 +70,7 @@ class UserPostViewController: UIViewController {
     }
     
     private func configureLinkTextField(textField: UITextField) {
+        textField.delegate = self
         let textFieldPaddingViewFrame = CGRectMake(0.0, 0.0, 13.0, 0.0)
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
@@ -72,8 +84,71 @@ class UserPostViewController: UIViewController {
     }
     
     @IBAction func findOnTheMap(sender: UIButton) {
+        if locationTextField.text!.isEmpty {
+            // show an alert if the UITextField doesn't have a value
+            let emptyStringAlert = UIAlertController(title: "Please enter your location", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            emptyStringAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(emptyStringAlert, animated: true, completion: nil)
+            return
+        } else {
+            // set locationString class variable
+            // call function to geocode the locationString
+            // transition from first subview group to second subview group
+            let locationString = locationTextField.text!
+            getLatitudeAndLongitudeFromString(locationString)
+        }
     }
     
+    func getLatitudeAndLongitudeFromString(location: String) {
+        let geocoder = CLGeocoder()
+        
+        geocoder.geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error: NSError?) in
+            if let placemark = placemarks?[0] {
+                self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
+                let locationCoordinate = placemark.location!.coordinate as CLLocationCoordinate2D
+                self.setMapViewRegionAndScale(locationCoordinate)
+                self.setLinkSubView()
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let errorAlert = UIAlertController(title: "Couldn't geocode your location", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(errorAlert, animated: true, completion: nil)
+                })
+            }
+        }
+    }
+    
+    func setMapViewRegionAndScale(location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpanMake(0.13, 0.13)
+        let region = MKCoordinateRegion(center: location, span: span)
+        mapView.setRegion(region, animated: true)
+        locationLatitude = "\(location.latitude)"
+        locationLongitude = "\(location.longitude)"
+    }
+    
+    @IBAction func submit(sender: UIButton) {
+        if linkTextField.text!.isEmpty {
+            let emptyStringAlert = UIAlertController(title: "Please enter a link to share", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            emptyStringAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(emptyStringAlert, animated: true, completion: nil)
+            return
+        } else {
+            mediaURL = linkTextField.text!
+            ParseClient.sharedInstance().postStudentLocation(uniqueID, firstName: firstName, lastName: lastName, mediaURL: mediaURL, locationString: locationString, locationLatitude: locationLatitude, locationLongitude: locationLongitude) { (success, errorString) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let errorAlert = UIAlertController(title: errorString!, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(errorAlert, animated: true, completion: nil)
+                    })
+                }
+            }
+        }
+    }
     
 }
 
