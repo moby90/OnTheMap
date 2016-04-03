@@ -4,13 +4,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--LoginViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" title="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -159,20 +158,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Smh-97-O1a">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Smh-97-O1a">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Smh-97-O1a" firstAttribute="leading" secondItem="qc2-oB-aRP" secondAttribute="leading" id="5Fs-kV-QOO"/>
-                            <constraint firstAttribute="trailing" secondItem="Smh-97-O1a" secondAttribute="trailing" id="JCO-xa-d3K"/>
-                            <constraint firstItem="Smh-97-O1a" firstAttribute="bottom" secondItem="Jkr-sc-gvz" secondAttribute="top" id="MVy-lh-CHg"/>
-                            <constraint firstItem="Smh-97-O1a" firstAttribute="top" secondItem="1bT-i5-sOa" secondAttribute="bottom" id="Mpd-v9-DJ2"/>
+                            <constraint firstItem="Smh-97-O1a" firstAttribute="leading" secondItem="qc2-oB-aRP" secondAttribute="leading" id="D2x-9e-pvq"/>
+                            <constraint firstAttribute="trailing" secondItem="Smh-97-O1a" secondAttribute="trailing" id="FVQ-Ie-a2g"/>
+                            <constraint firstItem="Smh-97-O1a" firstAttribute="bottom" secondItem="Jkr-sc-gvz" secondAttribute="top" id="IF6-Ft-BTF"/>
+                            <constraint firstItem="Smh-97-O1a" firstAttribute="top" secondItem="qc2-oB-aRP" secondAttribute="top" id="Qiu-yD-JrC"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="tabbar-map" id="E42-t3-kRf"/>
                     <navigationItem key="navigationItem" id="yX8-1J-glk"/>
+                    <connections>
+                        <outlet property="map" destination="Smh-97-O1a" id="mCO-eo-XBf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h2h-9H-RGV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -222,35 +224,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="F9f-wp-T4h">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="nameCell" id="F9f-wp-T4h" userLabel="nameCell">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F9f-wp-T4h" id="dwm-bk-T9R">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRm-le-HdD">
-                                            <rect key="frame" x="8" y="0.0" width="42" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="42" id="h0C-iT-2b8"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wz2-XM-aj7">
-                                            <rect key="frame" x="8" y="22" width="44" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="HRm-le-HdD" firstAttribute="leading" secondItem="dwm-bk-T9R" secondAttribute="leadingMargin" id="0c7-vy-9dA"/>
-                                        <constraint firstItem="Wz2-XM-aj7" firstAttribute="top" secondItem="HRm-le-HdD" secondAttribute="bottom" constant="1" id="9gG-WI-0ZI"/>
-                                        <constraint firstItem="HRm-le-HdD" firstAttribute="leading" secondItem="Wz2-XM-aj7" secondAttribute="leading" id="cg4-S3-Das"/>
-                                        <constraint firstItem="HRm-le-HdD" firstAttribute="top" secondItem="dwm-bk-T9R" secondAttribute="top" id="s7Y-88-8fl"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -261,6 +240,10 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="List" image="tabbar-list" id="Vkg-Fb-m4z"/>
                     <navigationItem key="navigationItem" id="yWV-ft-4SC"/>
+                    <connections>
+                        <outlet property="studentTableView" destination="9ZG-mn-Z1w" id="cma-XS-loZ"/>
+                        <outlet property="tableView" destination="9ZG-mn-Z1w" id="5IU-Lp-00j"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qlr-ee-UzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -286,21 +269,15 @@
         <scene sceneID="QVY-12-uYg">
             <objects>
                 <tabBarController id="2Dg-zW-9DS" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="On The Map" id="XNr-0r-fTh">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Py4-hY-OkT"/>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="refresh" id="W7Z-Jz-IKC"/>
-                            <barButtonItem image="pin" id="UG2-hk-bZa"/>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="On The Map" id="XNr-0r-fTh"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="bUN-SZ-wiL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Yw2-gR-dAf" kind="relationship" relationship="viewControllers" id="tDH-Ye-IAr"/>
                         <segue destination="XcM-R1-ZfX" kind="relationship" relationship="viewControllers" id="OiW-PZ-Os8"/>
+                        <segue destination="Yw2-gR-dAf" kind="relationship" relationship="viewControllers" id="1cO-zc-Nm8"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YVm-Hy-JTr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -309,7 +286,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pin" width="32" height="32"/>
         <image name="tabbar-list" width="32" height="32"/>
         <image name="tabbar-map" width="32" height="32"/>
     </resources>

@@ -58,14 +58,14 @@ class LoginViewController: UIViewController {
             return
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: Constants.UdacityBaseURL)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: Constants.UdacityBaseURL + Constants.Methods.CreateSession)!)
         
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { data, response, error in
+        let task = UdacityClient.sharedInstance().session.dataTaskWithRequest(request) { data, response, error in
             
             func displayError(error: String, debugLabelText: String? = nil) {
                 print(error)
@@ -94,6 +94,7 @@ class LoginViewController: UIViewController {
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            self.completeLogin()
             
             
         }
@@ -113,7 +114,7 @@ class LoginViewController: UIViewController {
         performUIUpdatesOnMain {
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
-            // Hier wird weitergeleitet zum nächsten View
+            self.goToNextView()
         }
     }
     
