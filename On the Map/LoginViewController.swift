@@ -23,26 +23,22 @@ class LoginViewController: UIViewController {
     
     @IBAction func signUpPressed(sender: UIButton) {
         // set url
-        let signUpURL = "https://www.udacity.com/account/auth#!/signup"
-        // open url in browser
-        UIApplication.sharedApplication().openURL(NSURL(string: signUpURL)!)
+        let signUpURL = Constants.signUpURL
+        
+        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: signUpURL)!)) {
+            
+            // open url in browser
+            UIApplication.sharedApplication().openURL(NSURL(string: signUpURL)!)
+        }
     }
     
     @IBAction func loginFacebookPressed(sender: UIButton) {
-        //TODO implement facebook login!
-        //Currently for debugging
-        //self.goToNextView()
-        //Only debugging purpose
+        
     }
 
     @IBAction func loginPressed(sender: UIButton) {
         
-        if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            debugTextLabel.text = "Username or Password Empty."
-        } else {
-                setUIEnabled(false)
-            
-        }
+        setUIEnabled(false)
         userLogin()
     }
     
@@ -77,13 +73,41 @@ class LoginViewController: UIViewController {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)", debugLabelText: "Could not connect to the internet.")
+                displayError("There was an error with your request: \(error)")
+                self.showSimpleAlert("No internet connection", message: "Make sure you have a valid internet connection")
                 return
             }
             
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode != 403 else {
-                displayError("There was an statusCode issue. \(response)", debugLabelText: "Username or Password wrong.")
+//            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode != 403 else {
+//                displayError("There was an statusCode issue. \(response)", debugLabelText: "Username or Password wrong.")
+//                return
+//            }
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode else {
+                displayError("Could not get statusCode.")
                 return
+            }
+            
+            if !(statusCode >= 200 && statusCode <= 299){
+                displayError("Bad statusCode.")
+                
+                var message = ""
+                
+                if (statusCode >= 100 && statusCode <= 199) {
+                    
+                    message = "The processing of the inquiry is still ongoing"
+                }
+            
+                if (statusCode >= 300 && statusCode <= 399) {
+                    
+                    message = "You have been redirected. Try to login again."
+                }
+                
+                if (statusCode >= 400 && statusCode <= 499) {
+                    
+                    message = "Bad credentials. Try again."
+                }
+                
+                self.showSimpleAlert("Could not connect", message: message)
             }
             
             guard let data = data else {
@@ -112,6 +136,18 @@ class LoginViewController: UIViewController {
             
         }
         task.resume()
+    }
+    
+    func showSimpleAlert(title: String, message: String) {
+        let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: {action -> Void in
+            alertView.dismissViewControllerAnimated(true, completion: nil)
+        })
+        alertView.addAction(alertAction)
+        
+        performUIUpdatesOnMain{
+            self.presentViewController(alertView, animated: false, completion: nil)
+        }
     }
     
     override func viewDidLoad() {
