@@ -25,6 +25,7 @@ class UserPostViewController: UIViewController {
     @IBOutlet var showOnTheMapSubView: UIView!
     @IBOutlet weak var linkSubView: UIView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -37,6 +38,9 @@ class UserPostViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        activityIndicator.stopAnimating()
+        activityIndicator.hidesWhenStopped = true
         setOnTheMapSubView()
     }
     
@@ -102,6 +106,11 @@ class UserPostViewController: UIViewController {
     }
     
     func getLatitudeAndLongitudeFromString(location: String) {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.activityIndicator.startAnimating()
+        })
+        
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error: NSError?) in
@@ -117,6 +126,10 @@ class UserPostViewController: UIViewController {
                     self.presentViewController(errorAlert, animated: true, completion: nil)
                 })
             }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.activityIndicator.stopAnimating()
+            })
         }
     }
     

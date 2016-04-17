@@ -251,8 +251,8 @@
                                             <constraint firstItem="qgP-En-VYk" firstAttribute="leading" secondItem="EFo-Hj-W5T" secondAttribute="leading" id="ulQ-MZ-Sa3"/>
                                         </constraints>
                                     </view>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-TZ-WPe">
-                                        <rect key="frame" x="0.0" y="180" width="600" height="376"/>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-TZ-WPe">
+                                        <rect key="frame" x="0.0" y="172" width="600" height="384"/>
                                     </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b32-2k-hua">
                                         <rect key="frame" x="214" y="476" width="171" height="36"/>
@@ -363,6 +363,9 @@
                                     <constraint firstItem="9m2-5b-ggN" firstAttribute="top" secondItem="4ST-0q-rVY" secondAttribute="bottom" constant="8" symbolic="YES" id="zYX-Pg-i1T"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G8n-0K-GFV" userLabel="Activity Indicator">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -372,6 +375,8 @@
                             <constraint firstItem="5Aa-tT-MqT" firstAttribute="top" secondItem="5OV-nU-w7T" secondAttribute="bottom" id="Fv2-hp-FtW"/>
                             <constraint firstAttribute="trailing" secondItem="5OV-nU-w7T" secondAttribute="trailing" id="JHE-B3-v0W"/>
                             <constraint firstItem="5Aa-tT-MqT" firstAttribute="centerX" secondItem="QMG-4m-h6H" secondAttribute="centerX" id="LW5-sS-ypQ"/>
+                            <constraint firstItem="G8n-0K-GFV" firstAttribute="centerY" secondItem="QMG-4m-h6H" secondAttribute="centerY" id="ZqC-Wm-2WM"/>
+                            <constraint firstItem="G8n-0K-GFV" firstAttribute="centerX" secondItem="QMG-4m-h6H" secondAttribute="centerX" id="awG-08-sS2"/>
                             <constraint firstItem="5Aa-tT-MqT" firstAttribute="leading" secondItem="5OV-nU-w7T" secondAttribute="leading" id="c6H-VI-CRy"/>
                             <constraint firstItem="4Y2-Gb-vM7" firstAttribute="top" secondItem="5OV-nU-w7T" secondAttribute="bottom" id="fyq-oI-dZt"/>
                             <constraint firstItem="4Y2-Gb-vM7" firstAttribute="leading" secondItem="QMG-4m-h6H" secondAttribute="leadingMargin" constant="-22" id="vHM-rD-ELx"/>
@@ -380,6 +385,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="G8n-0K-GFV" id="wk0-iX-M6c"/>
                         <outlet property="linkSubView" destination="5Aa-tT-MqT" id="Sah-74-FK1"/>
                         <outlet property="linkTextField" destination="qgP-En-VYk" id="bfl-Sl-opU"/>
                         <outlet property="locationTextField" destination="9m2-5b-ggN" id="jwi-qq-DpF"/>
