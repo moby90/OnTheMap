@@ -36,6 +36,20 @@ struct Constants {
         static let ObjectID = "objectID"
     }
     
+    struct JSONResponseKeys {
+        
+        static let CreatedAt = "createdAt"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let ObjectID = "objectId"
+        static let Results = "results"
+        
+    }
+    
     struct RequestToServer {
         static let udacity : String = "udacity"
         static let parse : String = "parse"

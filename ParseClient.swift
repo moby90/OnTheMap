@@ -66,7 +66,7 @@ class ParseClient : NSObject {
             let topLevelDict = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
             
             let studentsArray = topLevelDict["results"] as! NSArray
-                self.studentLocations = []
+            
                 for studentDictionary in studentsArray {
                     guard let student = self.studentLocationFromDictionary(studentDictionary as! NSDictionary) else{
                         return
@@ -81,64 +81,74 @@ class ParseClient : NSObject {
     }
     
     // post the logged-in user's location
-    func postStudentLocation(uniqueID: String, firstName: String, lastName: String, mediaURL: String, locationString: String, locationLatitude: String, locationLongitude: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: ParseConstants.urlForPostRequest)!)
-        request.HTTPMethod = "POST"
-        request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"\(uniqueID)\", \"firstName\": \"\(firstName)\", \"lastName\": \"\(lastName)\", \"mapString\": \"\(locationString)\", \"mediaURL\": \"\(mediaURL)\", \"latitude\": \(locationLatitude), \"longitude\": \(locationLongitude)}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+    func postStudentLocation(uniqueID: String, firstName: String, lastName: String, mediaURL: String, mapString: String, locationLatitude: Double, locationLongitude: Double, completionHandler: (success: Bool, errorString: String?) -> Void) {
+        
+        let jsonBodyParameters: [String: AnyObject] = [
+            Constants.JSONBodyKeys.UniqueKey :UdacityClient.sharedInstance().uniqueID,
+            Constants.JSONBodyKeys.FirstName : UdacityClient.sharedInstance().userFirstName,
+            Constants.JSONBodyKeys.LastName : UdacityClient.sharedInstance().userLastName,
+            Constants.JSONBodyKeys.MediaURL : mediaURL,
+            Constants.JSONBodyKeys.MapString : mapString,
+            Constants.JSONBodyKeys.Latitude : locationLatitude,
+            Constants.JSONBodyKeys.Longitude : locationLongitude
+        ]
+        
+        taskForPOSTMethod(jsonBodyParameters, completionHandler: { parsedResult, error in
             
-            guard (error == nil) else {
-                completionHandler(success: false, errorString: "The internet connection appears to be offline")
-                return
-            }
-            
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode else {
-                print("Could not get statusCode.")
-                return
-            }
-            
-            if !(statusCode >= 200 && statusCode <= 299){
-                print("Bad statusCode.")
-                
-                var message = ""
-                
-                if (statusCode >= 100 && statusCode <= 199) {
-                    
-                    message = "The processing of the inquiry is still ongoing"
-                }
-                
-                if (statusCode >= 300 && statusCode <= 399) {
-                    
-                    message = "You have been redirected. Try to login again."
-                }
-                
-                if (statusCode >= 400 && statusCode <= 499) {
-                    
-                    message = "Bad credentials. Try again."
-                }
-                
-                completionHandler(success: false, errorString: message)
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            let parsedResult = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-            
-            guard (parsedResult["createdAt"] == nil) else {
-                completionHandler(success: false, errorString: "An unknown error occurred")
+            guard let parsedData = parsedResult[Constants.JSONResponseKeys.CreatedAt] as? String else {
+                completionHandler(success: false, errorString: " Could not find key : \(Constants.JSONResponseKeys.CreatedAt) in parsedResult, method : addStudentLocation/taskForPOSTMethod ")
                 return
             }
             completionHandler(success: true, errorString: nil)
             
+        })
+    }
+    
+    func taskForPOSTMethod(jsonBodyParameters: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?)->Void) -> NSURLSessionTask {
+        
+        /* 1. Set the parameters */
+        
+        /* 2. Build the URL */
+        let urlString = ParseConstants.urlForPostRequest
+        let url = NSURL(string: urlString)!
+        
+        /* 3. Configure the request */
+        let request = NSMutableURLRequest(URL: url)
+        
+        request.HTTPMethod = "POST"
+        request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBodyParameters, options: .PrettyPrinted)
+        
+        /* 4. Make the request */
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            
+            /* 5/6. Parse the data and use the data (happens in the completion handler) */
+            if let error = error {
+                print(error.localizedDescription)
+                completionHandler(result: nil, error: error)
+                
+            } else {
+                self.parseDataWithJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            }
         }
+        /* 7. Start the request */
         task.resume()
+        return task
+        
+    }
+    
+    func parseDataWithJSONWithCompletionHandler (data: NSData!, completionHandler: (result: AnyObject!, error: NSError?)-> Void ) {
+        do {
+            let parsedData: AnyObject? = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+            
+            completionHandler(result: parsedData, error: nil)
+        }
+        catch let JSONError as NSError{
+            completionHandler(result: nil, error: JSONError)
+        }
     }
     
     // convenience method for converting JSON into a Student object

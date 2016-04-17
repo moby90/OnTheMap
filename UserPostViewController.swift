@@ -15,9 +15,9 @@ class UserPostViewController: UIViewController {
     var lastName: String = UdacityClient.sharedInstance().userLastName
     var uniqueID: String = UdacityClient.sharedInstance().uniqueID
     
-    var locationString: String = ""
-    var locationLatitude: String = ""
-    var locationLongitude: String = ""
+    var mapString: String = ""
+    var locationLatitude: Double = 0
+    var locationLongitude: Double = 0
     var mediaURL: String = ""
     
     @IBOutlet weak var locationTextField: UITextField!
@@ -100,8 +100,8 @@ class UserPostViewController: UIViewController {
             // set locationString class variable
             // call function to geocode the locationString
             // transition from first subview group to second subview group
-            let locationString = locationTextField.text!
-            getLatitudeAndLongitudeFromString(locationString)
+            mapString = locationTextField.text!
+            getLatitudeAndLongitudeFromString(mapString)
         }
     }
     
@@ -137,8 +137,8 @@ class UserPostViewController: UIViewController {
         let span = MKCoordinateSpanMake(0.13, 0.13)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
-        locationLatitude = "\(location.latitude)"
-        locationLongitude = "\(location.longitude)"
+        locationLatitude = location.latitude
+        locationLongitude = location.longitude
     }
     
     @IBAction func submit(sender: UIButton) {
@@ -149,7 +149,7 @@ class UserPostViewController: UIViewController {
             return
         } else {
             mediaURL = linkTextField.text!
-            ParseClient.sharedInstance().postStudentLocation(uniqueID, firstName: firstName, lastName: lastName, mediaURL: mediaURL, locationString: locationString, locationLatitude: locationLatitude, locationLongitude: locationLongitude) { (success, errorString) in
+            ParseClient.sharedInstance().postStudentLocation(uniqueID, firstName: firstName, lastName: lastName, mediaURL: mediaURL, mapString: mapString, locationLatitude: locationLatitude, locationLongitude: locationLongitude) { (success, errorString) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.dismissViewControllerAnimated(true, completion: nil)

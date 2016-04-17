@@ -46,7 +46,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginFacebookPressed(sender: UIButton) {
-        
     }
 
     @IBAction func loginPressed(sender: UIButton) {
