@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBAction func signUpPressed(sender: UIButton) {
         // set url
@@ -32,13 +33,24 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func disableAndStartLoadingUI() {
+        setUIEnabled(false)
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    func enableAndStopLoadingUI() {
+        setUIEnabled(true)
+        activityIndicator.hidden = true
+        activityIndicator.stopAnimating()
+    }
+    
     @IBAction func loginFacebookPressed(sender: UIButton) {
-        
+        goToNextView()
     }
 
     @IBAction func loginPressed(sender: UIButton) {
-        
-        setUIEnabled(false)
+        disableAndStartLoadingUI()
         userLogin()
     }
     
@@ -66,7 +78,7 @@ class LoginViewController: UIViewController {
             func displayError(error: String, debugLabelText: String? = nil) {
                 print(error)
                 performUIUpdatesOnMain {
-                    self.setUIEnabled(true)
+                    self.enableAndStopLoadingUI()
                     self.debugTextLabel.text = debugLabelText
                 }
             }
@@ -140,6 +152,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let sessionConfig: NSURLSessionConfiguration = appDelegate.sharedSession.configuration
         sessionConfig.timeoutIntervalForRequest = 1.0;
@@ -150,7 +163,7 @@ class LoginViewController: UIViewController {
     private func completeLogin() {
         performUIUpdatesOnMain {
             self.debugTextLabel.text = ""
-            self.setUIEnabled(true)
+            self.enableAndStopLoadingUI()
             self.goToNextView()
         }
     }
@@ -211,14 +224,20 @@ extension LoginViewController {
         usernameTextField.enabled = enabled
         passwordTextField.enabled = enabled
         loginButton.enabled = enabled
+        facebookButton.enabled = enabled
+        signUpButton.enabled = enabled
         debugTextLabel.text = ""
         debugTextLabel.enabled = enabled
         
         // adjust login button alpha
         if enabled {
             loginButton.alpha = 1.0
+            facebookButton.alpha = 1.0
+            signUpButton.alpha = 1.0
         } else {
             loginButton.alpha = 0.5
+            facebookButton.alpha = 0.5
+            signUpButton.alpha = 0.5
         }
     }
     

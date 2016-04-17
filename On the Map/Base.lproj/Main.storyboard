@@ -91,6 +91,9 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="igh-DS-GxQ">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.63529411764705879" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -105,6 +108,7 @@
                             <constraint firstItem="2Jg-Gs-diM" firstAttribute="top" secondItem="AeR-0t-GP7" secondAttribute="bottom" constant="8" id="I67-L7-CSr"/>
                             <constraint firstItem="Do6-NJ-zrc" firstAttribute="centerX" secondItem="ScZ-xi-ces" secondAttribute="centerX" id="J86-Zr-Mmh"/>
                             <constraint firstItem="ScZ-xi-ces" firstAttribute="trailing" secondItem="e8O-Th-DiT" secondAttribute="trailing" id="LRC-2U-ePs"/>
+                            <constraint firstItem="igh-DS-GxQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Lxe-O9-usi"/>
                             <constraint firstItem="AeR-0t-GP7" firstAttribute="top" secondItem="Eab-eG-VFF" secondAttribute="bottom" constant="8" id="M8P-Sd-FCT"/>
                             <constraint firstItem="ScZ-xi-ces" firstAttribute="leading" secondItem="e8O-Th-DiT" secondAttribute="leading" id="RW1-NV-oNK"/>
                             <constraint firstItem="jw6-6I-rGG" firstAttribute="top" secondItem="e8O-Th-DiT" secondAttribute="bottom" constant="8" id="c2R-K4-lgl"/>
@@ -112,11 +116,13 @@
                             <constraint firstItem="AeR-0t-GP7" firstAttribute="trailing" secondItem="2Jg-Gs-diM" secondAttribute="trailing" id="fDJ-iA-WLx"/>
                             <constraint firstItem="ScZ-xi-ces" firstAttribute="top" secondItem="Do6-NJ-zrc" secondAttribute="bottom" constant="8" id="fNz-wF-r6A"/>
                             <constraint firstItem="jw6-6I-rGG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="o43-si-soF"/>
+                            <constraint firstItem="igh-DS-GxQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pua-ls-MrJ"/>
                             <constraint firstItem="Eab-eG-VFF" firstAttribute="top" secondItem="jw6-6I-rGG" secondAttribute="bottom" constant="8" id="qoi-TP-Lqr"/>
                             <constraint firstItem="jw6-6I-rGG" firstAttribute="trailing" secondItem="AeR-0t-GP7" secondAttribute="trailing" id="ww0-xJ-Z6d"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="igh-DS-GxQ" id="qBL-RA-Ktj"/>
                         <outlet property="debugTextLabel" destination="AeR-0t-GP7" id="jKE-7t-edv"/>
                         <outlet property="facebookButton" destination="2Jg-Gs-diM" id="HDL-9n-nS7"/>
                         <outlet property="loginButton" destination="jw6-6I-rGG" id="P2C-7v-2Yt"/>
@@ -398,7 +404,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F9f-wp-T4h" id="dwm-bk-T9R">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
