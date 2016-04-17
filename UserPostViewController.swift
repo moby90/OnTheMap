@@ -31,6 +31,10 @@ class UserPostViewController: UIViewController {
     var keyboardOnScreen = false
     var mKeyboardHeight: CGFloat = 0.0
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setOnTheMapSubView()
@@ -38,13 +42,11 @@ class UserPostViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeToKeyboardNotifications()
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        subscribeToKeyboardNotifications()
         configureLocationTextField(locationTextField)
         configureLinkTextField(linkTextField)
     }
@@ -154,48 +156,8 @@ class UserPostViewController: UIViewController {
 
 extension UserPostViewController: UITextFieldDelegate {
     
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UserPostViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UserPostViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func unsubscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-    // MARK: Show/Hide Keyboard
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if !keyboardOnScreen {
-            mKeyboardHeight = keyboardHeight(notification)
-            view.frame.origin.y -= mKeyboardHeight
-            keyboardOnScreen = true
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if keyboardOnScreen {
-            view.frame.origin.y += mKeyboardHeight
-            keyboardOnScreen = false
-        }
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-        keyboardOnScreen = true
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
-        keyboardOnScreen = false
-    }
-    
-    private func keyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
     }
 }
