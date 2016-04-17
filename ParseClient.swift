@@ -22,11 +22,33 @@ class ParseClient : NSObject {
         super.init()
     }
     
+    func dateToString(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    //"https://api.parse.com/1/classes/StudentLocation?limit=100"
+    func getParseURL(date: NSDate) -> NSURL? {
+        let urlComponents = NSURLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "api.parse.com"
+        urlComponents.path = "/1/classes/StudentLocation"
+        
+        let limitQuery = NSURLQueryItem(name: "limit", value: "100")
+        let updatedAtQuery = NSURLQueryItem(name: "updatedAt", value: dateToString(date))
+        
+        urlComponents.queryItems = [limitQuery, updatedAtQuery]
+        
+        return urlComponents.URL
+    }
+    
     // MARK: - Parse API Call Functions
     
     // retrieve last 100 students and add them to the studentLocations array
     func getStudentLocationsUsingCompletionHandler(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: ParseConstants.urlForGetRequest)!)
+        
+        let request = NSMutableURLRequest(URL: self.getParseURL(NSDate())!)
         request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { data, response, error in
@@ -71,6 +93,35 @@ class ParseClient : NSObject {
             
             guard (error == nil) else {
                 completionHandler(success: false, errorString: "The internet connection appears to be offline")
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode else {
+                print("Could not get statusCode.")
+                return
+            }
+            
+            if !(statusCode >= 200 && statusCode <= 299){
+                print("Bad statusCode.")
+                
+                var message = ""
+                
+                if (statusCode >= 100 && statusCode <= 199) {
+                    
+                    message = "The processing of the inquiry is still ongoing"
+                }
+                
+                if (statusCode >= 300 && statusCode <= 399) {
+                    
+                    message = "You have been redirected. Try to login again."
+                }
+                
+                if (statusCode >= 400 && statusCode <= 499) {
+                    
+                    message = "Bad credentials. Try again."
+                }
+                
+                completionHandler(success: false, errorString: message)
                 return
             }
             

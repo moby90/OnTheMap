@@ -44,7 +44,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+    }
+    
+    func showSimpleAlert(title: String, message: String) {
+        let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: {action -> Void in
+            alertView.dismissViewControllerAnimated(true, completion: nil)
+        })
+        alertView.addAction(alertAction)
         
+        performUIUpdatesOnMain{
+        UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alertView, animated: false, completion: nil)
+        }
     }
 }
 
