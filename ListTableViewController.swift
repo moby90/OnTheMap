@@ -50,6 +50,10 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let student = students[indexPath.row]
-        UIApplication.sharedApplication().openURL(NSURL(string: student.mediaURL)!)
+        
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: student.mediaURL)!) {
+            UIApplication.sharedApplication().openURL(NSURL(string: student.mediaURL)!)
+        }
+        
     }
 }
