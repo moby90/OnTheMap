@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 displayError("There was an error with your request: \(error)")
-                self.appDelegate.showSimpleAlert("No internet connection", message: "Make sure you have a valid internet connection")
+                self.showSimpleAlert("No internet connection", message: "Make sure you have a valid internet connection")
                 return
             }
             
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController {
                     message = "Bad credentials. Try again."
                 }
                 
-                self.appDelegate.showSimpleAlert("Could not connect", message: message)
+                self.showSimpleAlert("Could not connect", message: message)
             }
             
             guard let data = data else {
@@ -170,6 +170,18 @@ class LoginViewController: UIViewController {
     private func goToNextView() {
         let nc = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavigationController") as! UINavigationController
         self.presentViewController(nc, animated: true, completion: nil)
+    }
+    
+    func showSimpleAlert(title: String, message: String) {
+        let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: {action -> Void in
+            alertView.dismissViewControllerAnimated(true, completion: nil)
+        })
+        alertView.addAction(alertAction)
+        
+        performUIUpdatesOnMain{
+            self.presentViewController(alertView, animated: false, completion: nil)
+        }
     }
 }
 
