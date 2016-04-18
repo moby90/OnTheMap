@@ -51,8 +51,13 @@ class ListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let student = students[indexPath.row]
         
-        if UIApplication.sharedApplication().canOpenURL(NSURL(string: student.mediaURL)!) {
-            UIApplication.sharedApplication().openURL(NSURL(string: student.mediaURL)!)
+        guard let url = NSURL(string: student.mediaURL) else {
+            print("Could not unwrap student.mediaURL")
+            return
+        }
+        
+        if UIApplication.sharedApplication().canOpenURL(url) {
+            UIApplication.sharedApplication().openURL(url)
         }
         
     }
