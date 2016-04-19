@@ -95,6 +95,12 @@ class ParseClient : NSObject {
         
         taskForPOSTMethod(jsonBodyParameters, completionHandler: { parsedResult, error in
             
+            guard let error = error else {
+                print("error in taskForPOSTMethod")
+                return
+                
+            }
+            
             guard let parsedData = parsedResult[Constants.JSONResponseKeys.CreatedAt] as? String else {
                 completionHandler(success: false, errorString: " Could not find key : \(Constants.JSONResponseKeys.CreatedAt) in parsedResult, method : addStudentLocation/taskForPOSTMethod ")
                 return
