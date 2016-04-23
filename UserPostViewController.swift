@@ -44,15 +44,10 @@ class UserPostViewController: UIViewController {
         setOnTheMapSubView()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureLocationTextField(locationTextField)
-        configureLinkTextField(linkTextField)
+        configureTextField(locationTextField, color: Constants.UI.LoginBlue)
+        configureTextField(linkTextField, color: UIColor.whiteColor())
     }
     
     func setOnTheMapSubView() {
@@ -65,24 +60,14 @@ class UserPostViewController: UIViewController {
         showOnTheMapSubView.hidden = true
     }
     
-    private func configureLocationTextField(textField: UITextField) {
+    private func configureTextField(textField: UITextField, color: UIColor) {
         textField.delegate = self
         let textFieldPaddingViewFrame = CGRectMake(0.0, 0.0, 13.0, 0.0)
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
         textField.leftViewMode = .Always
-        textField.textColor = Constants.UI.LoginBlue
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: Constants.UI.LoginBlue])
-    }
-    
-    private func configureLinkTextField(textField: UITextField) {
-        textField.delegate = self
-        let textFieldPaddingViewFrame = CGRectMake(0.0, 0.0, 13.0, 0.0)
-        let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
-        textField.leftView = textFieldPaddingView
-        textField.leftViewMode = .Always
-        textField.textColor = UIColor.whiteColor()
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        textField.textColor = color
+        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: color])
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {

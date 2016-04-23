@@ -40,7 +40,7 @@ class UdacityClient : NSObject {
     }
     
     func logoutRequest(completionHandler: (result: AnyObject?, error: NSError?)->Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: Constants.UdacityBaseURL + Constants.Methods.CreateSession)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: UdacityConstants.baseURL + Constants.Methods.CreateSession)!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         
@@ -77,7 +77,7 @@ class UdacityClient : NSObject {
         /* Set server base url */
         var baseUrl : String = ""
         if (server == Constants.RequestToServer.udacity) {
-            baseUrl = Constants.UdacityBaseURL
+            baseUrl = UdacityConstants.baseURL
         } else if (server == Constants.RequestToServer.parse) {
             baseUrl = Constants.ParseBaseURL
         }
@@ -88,9 +88,9 @@ class UdacityClient : NSObject {
         let request = NSMutableURLRequest(URL: url)
         
         if (server == Constants.RequestToServer.parse) {
-            request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
-            request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue(ParseConstants.parseAppId, forHTTPHeaderField: ParseConstants.RequestValues.appId)
+            request.addValue(ParseConstants.parseApiKey, forHTTPHeaderField: ParseConstants.RequestValues.apiKey)
+            request.addValue(ParseConstants.jsonValue, forHTTPHeaderField: ParseConstants.RequestValues.jsonValue)
         }
         
         /* Make the request */
@@ -136,7 +136,7 @@ class UdacityClient : NSObject {
     func getStudentLocations(completionHandler: (result: [StudentInformation]?, error: NSError?) -> Void) {
         
         // make the request
-        let task = taskForGETMethod(Constants.RequestToServer.parse, method: Constants.Methods.limit, parameters: ["limit":200]) { (result, error) -> Void in
+        let task = taskForGETMethod(Constants.RequestToServer.parse, method: Constants.Methods.limit, parameters: ["limit":100]) { (result, error) -> Void in
             if error != nil {
                 completionHandler(result: nil, error: error)
             }

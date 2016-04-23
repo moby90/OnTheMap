@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func signUpPressed(sender: UIButton) {
         // set url
-        let signUpURL = Constants.signUpURL
+        let signUpURL = UdacityConstants.signUpURL
         
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string: signUpURL)!)) {
             
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
             return
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: Constants.UdacityBaseURL + Constants.Methods.CreateSession)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: UdacityConstants.baseURL + Constants.Methods.CreateSession)!)
         
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")

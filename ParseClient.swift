@@ -10,8 +10,6 @@ import Foundation
 
 class ParseClient : NSObject {
     
-    
-    
     var session: NSURLSession
     var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
     var studentLocations: [StudentInformation] = []
@@ -28,15 +26,14 @@ class ParseClient : NSObject {
         return dateFormatter.stringFromDate(date)
     }
     
-    //"https://api.parse.com/1/classes/StudentLocation?limit=100"
     func getParseURL(date: NSDate) -> NSURL? {
         let urlComponents = NSURLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "api.parse.com"
-        urlComponents.path = "/1/classes/StudentLocation"
+        urlComponents.scheme = ParseConstants.UrlComponents.scheme
+        urlComponents.host = ParseConstants.UrlComponents.host
+        urlComponents.path = ParseConstants.UrlComponents.path
         
-        let limitQuery = NSURLQueryItem(name: "limit", value: "100")
-        let updatedAtQuery = NSURLQueryItem(name: "updatedAt", value: dateToString(date))
+        let limitQuery = NSURLQueryItem(name: ParseConstants.QueryItems.limit, value: "100")
+        let updatedAtQuery = NSURLQueryItem(name: ParseConstants.QueryItems.updatedAt, value: dateToString(date))
         
         urlComponents.queryItems = [limitQuery, updatedAtQuery]
         
@@ -49,8 +46,8 @@ class ParseClient : NSObject {
     func getStudentLocationsUsingCompletionHandler(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         let request = NSMutableURLRequest(URL: self.getParseURL(NSDate())!)
-        request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(ParseConstants.parseAppId, forHTTPHeaderField: ParseConstants.RequestValues.appId)
+        request.addValue(ParseConstants.parseApiKey, forHTTPHeaderField: ParseConstants.RequestValues.apiKey)
         let task = session.dataTaskWithRequest(request) { data, response, error in
             
             guard error == nil else {
@@ -95,10 +92,9 @@ class ParseClient : NSObject {
         
         taskForPOSTMethod(jsonBodyParameters, completionHandler: { parsedResult, error in
             
-            guard let error = error else {
+            guard error == nil else {
                 print("error in taskForPOSTMethod")
                 return
-                
             }
             
             guard let parsedData = parsedResult[Constants.JSONResponseKeys.CreatedAt] as? String else {
@@ -121,10 +117,10 @@ class ParseClient : NSObject {
         /* 3. Configure the request */
         let request = NSMutableURLRequest(URL: url)
         
-        request.HTTPMethod = "POST"
-        request.addValue(Constants.parseAppId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(Constants.parseApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPMethod = Constants.Methods.httpPOST
+        request.addValue(ParseConstants.parseAppId, forHTTPHeaderField: ParseConstants.RequestValues.appId)
+        request.addValue(ParseConstants.parseApiKey, forHTTPHeaderField: ParseConstants.RequestValues.apiKey)
+        request.addValue(ParseConstants.jsonValue, forHTTPHeaderField: ParseConstants.RequestValues.jsonValue)
         
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBodyParameters, options: .PrettyPrinted)
         
@@ -159,15 +155,15 @@ class ParseClient : NSObject {
     
     // convenience method for converting JSON into a Student object
     func studentLocationFromDictionary(studentDictionary: NSDictionary) -> StudentInformation? {
-        let studentFirstName = studentDictionary["firstName"] as! String
-        let studentLastName = studentDictionary["lastName"] as! String
-        let studentLongitude = studentDictionary["longitude"] as! Float!
-        let studentLatitude = studentDictionary["latitude"] as! Float!
-        let studentMediaURL = studentDictionary["mediaURL"] as! String
-        let studentMapString = studentDictionary["mapString"] as! String
-        let studentObjectID = studentDictionary["objectId"] as! String
-        let studentUniqueKey = studentDictionary["uniqueKey"] as! String
-        let initializerDictionary = ["firstName": studentFirstName, "lastName": studentLastName, "longitude": studentLongitude, "latitude": studentLatitude, "mediaURL": studentMediaURL, "mapString": studentMapString, "objectID": studentObjectID, "uniqueKey": studentUniqueKey]
+        let studentFirstName = studentDictionary[Student.firstName] as! String
+        let studentLastName = studentDictionary[Student.lastName] as! String
+        let studentLongitude = studentDictionary[Student.longitude] as! Float!
+        let studentLatitude = studentDictionary[Student.latitude] as! Float!
+        let studentMediaURL = studentDictionary[Student.mediaURL] as! String
+        let studentMapString = studentDictionary[Student.mapString] as! String
+        let studentObjectID = studentDictionary[Student.objectID] as! String
+        let studentUniqueKey = studentDictionary[Student.uniqueKey] as! String
+        let initializerDictionary = [Student.firstName: studentFirstName, Student.lastName: studentLastName, Student.longitude: studentLongitude, Student.latitude: studentLatitude, Student.mediaURL: studentMediaURL, Student.mapString: studentMapString, Student.objectID: studentObjectID, Student.uniqueKey: studentUniqueKey]
         return StudentInformation(dict: initializerDictionary as! [String:AnyObject])
     }
     

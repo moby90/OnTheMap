@@ -10,13 +10,9 @@ import UIKit
 
 // MARK: - Constants
 struct Constants {
-    static let parseAppId: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-    static let parseApiKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     
-    static let signUpURL : String = "https://www.udacity.com/account/auth#!/signup"
     
-    static let UdacityBaseURL: String = "https://www.udacity.com/api/"
-    static let ParseBaseURL: String = "https://api.parse.com/1/classes/StudentLocation"
+    static let ParseBaseURL = "https://api.parse.com/1/classes/StudentLocation"
     
     // MARK: - JSON Body Keys
     struct JSONBodyKeys {
@@ -51,17 +47,19 @@ struct Constants {
     }
     
     struct RequestToServer {
-        static let udacity : String = "udacity"
-        static let parse : String = "parse"
+        static let udacity = "udacity"
+        static let parse = "parse"
     }
     
     struct Methods {
         // get udacity session
-        static let CreateSession : String = "session"
+        static let CreateSession = "session"
         // get public users data
-        static let Users : String = "users/"
+        static let Users = "users/"
         // parse limit
-        static let limit : String = ""
+        static let limit = ""
+        
+        static let httpPOST = "POST"
     }
     
     // MARK: UI
@@ -74,7 +72,23 @@ struct Constants {
     }
 }
 
+struct Student {
+    static let firstName = "firstName"
+    static let lastName = "lastName"
+    static let latitude = "latitude"
+    static let longitude = "longitude"
+    static let mapString = "mapString"
+    static let mediaURL = "mediaURL"
+    static let results = "results"
+    static let objectID = "objectId"
+    static let uniqueKey = "uniqueKey"
+    
+}
+
 struct UdacityConstants {
+    static let signUpURL = "https://www.udacity.com/account/auth#!/signup"
+    static let baseURL = "https://www.udacity.com/api/"
+    
     static let FirstName = "firstName"
     static let LastName = "lastName"
     static let Latitude = "latitude"
@@ -83,6 +97,27 @@ struct UdacityConstants {
 }
 
 struct ParseConstants {
+    static let parseAppId = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+    static let parseApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+    static let jsonValue = "application/json"
+    
     static let urlForGetRequest = "https://api.parse.com/1/classes/StudentLocation?limit=100"
     static let urlForPostRequest = "https://api.parse.com/1/classes/StudentLocation"
+    
+    struct QueryItems {
+        static let limit = "limit"
+        static let updatedAt = "updatedAt"
+    }
+    
+    struct RequestValues {
+        static let appId = "X-Parse-Application-Id"
+        static let apiKey = "X-Parse-REST-API-Key"
+        static let jsonValue = "Content-Type"
+    }
+    
+    struct UrlComponents {
+        static let scheme = "https"
+        static let host = "api.parse.com"
+        static let path = "/1/classes/StudentLocation"
+    }
 }
