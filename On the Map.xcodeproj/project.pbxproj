@@ -22,6 +22,7 @@
 		F8F691991CB03BCA0040223E /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F691981CB03BCA0040223E /* StudentInformation.swift */; };
 		F8F6919B1CB0820D0040223E /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F6919A1CB0820D0040223E /* UdacityClient.swift */; };
 		F8F6919D1CB16CFA0040223E /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F6919C1CB16CFA0040223E /* ParseClient.swift */; };
+		F8F6919F1CCD20130040223E /* SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F6919E1CCD20130040223E /* SimpleAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		F8F691981CB03BCA0040223E /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		F8F6919A1CB0820D0040223E /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		F8F6919C1CB16CFA0040223E /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		F8F6919E1CCD20130040223E /* SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				F8F691981CB03BCA0040223E /* StudentInformation.swift */,
 				F8F6919A1CB0820D0040223E /* UdacityClient.swift */,
 				F8F6919C1CB16CFA0040223E /* ParseClient.swift */,
+				F8F6919E1CCD20130040223E /* SimpleAlert.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				F8D3F43A1CA6D89B0018E11F /* AppDelegate.swift in Sources */,
 				F8D3F4631CA964240018E11F /* UserPostViewController.swift in Sources */,
 				F8D3F45F1CA963210018E11F /* ListTableViewController.swift in Sources */,
+				F8F6919F1CCD20130040223E /* SimpleAlert.swift in Sources */,
 				F8D3F4511CA706AA0018E11F /* Constants.swift in Sources */,
 				F8F691991CB03BCA0040223E /* StudentInformation.swift in Sources */,
 				F8D3F4531CA7077A0018E11F /* GCDBlackBox.swift in Sources */,
