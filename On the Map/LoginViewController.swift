@@ -35,13 +35,11 @@ class LoginViewController: UIViewController {
     
     func disableAndStartLoadingUI() {
         setUIEnabled(false)
-        activityIndicator.hidden = false
         activityIndicator.startAnimating()
     }
     
     func enableAndStopLoadingUI() {
         setUIEnabled(true)
-        activityIndicator.hidden = true
         activityIndicator.stopAnimating()
     }
     
@@ -147,6 +145,10 @@ class LoginViewController: UIViewController {
             
         }
         task.resume()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        activityIndicator.hidesWhenStopped = true
     }
     
     override func viewDidLoad() {
