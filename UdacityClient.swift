@@ -101,6 +101,34 @@ class UdacityClient : NSObject {
                 completionHandler(result: nil, error: downloadError)
             } else {
                 
+                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode else {
+                    print("Could not get statusCode.")
+                    return
+                }
+                
+                if !(statusCode >= 200 && statusCode <= 299){
+                    print("Bad statusCode.")
+                    
+                    var message = ""
+                    
+                    if (statusCode >= 100 && statusCode <= 199) {
+                        
+                        message = "StatusCode 1xx. The processing of the inquiry is still ongoing"
+                    }
+                    
+                    if (statusCode >= 300 && statusCode <= 399) {
+                        
+                        message = "StatusCode 3xx. You have been redirected."
+                    }
+                    
+                    if (statusCode >= 400 && statusCode <= 499) {
+                        
+                        message = "StatusCode 4xx. Something bad happened. Try to reconnect again."
+                    }
+                    
+                    completionHandler(result: nil, error: NSError(domain: message, code: statusCode, userInfo: nil))
+                }
+                
                 var newData: NSData?
                 newData = nil
                 guard let data = data else {

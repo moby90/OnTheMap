@@ -94,6 +94,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     {
         print("reload")
         UdacityClient.sharedInstance().getStudentLocations { users, error in
+            
+            if error != nil {
+                SimpleAlert().showSimpleAlert(self, title: "Something happened.", message: error!.domain)
+            }
+            
             if let usersData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
                     StudentInformation.sharedInstance.usersData = usersData
