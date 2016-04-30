@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F84D9CDE1CD4D51800D0C7DB /* StudentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84D9CDD1CD4D51800D0C7DB /* StudentData.swift */; };
 		F8D3F43A1CA6D89B0018E11F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F4391CA6D89B0018E11F /* AppDelegate.swift */; };
 		F8D3F43C1CA6D89B0018E11F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3F43B1CA6D89B0018E11F /* LoginViewController.swift */; };
 		F8D3F43F1CA6D89B0018E11F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3F43D1CA6D89B0018E11F /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F84D9CDD1CD4D51800D0C7DB /* StudentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentData.swift; sourceTree = "<group>"; };
 		F8D3F4361CA6D89B0018E11F /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3F4391CA6D89B0018E11F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3F43B1CA6D89B0018E11F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "On the Map/LoginViewController.swift"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				F8F6919A1CB0820D0040223E /* UdacityClient.swift */,
 				F8F6919C1CB16CFA0040223E /* ParseClient.swift */,
 				F8F6919E1CCD20130040223E /* SimpleAlert.swift */,
+				F84D9CDD1CD4D51800D0C7DB /* StudentData.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8F6919B1CB0820D0040223E /* UdacityClient.swift in Sources */,
+				F84D9CDE1CD4D51800D0C7DB /* StudentData.swift in Sources */,
 				F8D3F43C1CA6D89B0018E11F /* LoginViewController.swift in Sources */,
 				F8D3F4421CA6D89B0018E11F /* On_the_Map.xcdatamodeld in Sources */,
 				F8D3F43A1CA6D89B0018E11F /* AppDelegate.swift in Sources */,

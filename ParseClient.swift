@@ -12,7 +12,6 @@ class ParseClient : NSObject {
     
     var session: NSURLSession
     var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
-    var studentLocations: [StudentInformation] = []
     
     override init() {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -68,7 +67,7 @@ class ParseClient : NSObject {
                     guard let student = self.studentLocationFromDictionary(studentDictionary as! NSDictionary) else{
                         return
                     }
-                    self.studentLocations.append(student)
+                    StudentData.sharedInstance().usersData.append(student)
             }
             
             completionHandler(success: true, errorString: nil)
@@ -94,6 +93,7 @@ class ParseClient : NSObject {
             
             guard error == nil else {
                 print("error in taskForPOSTMethod")
+                completionHandler(success: false, errorString: error?.localizedDescription)
                 return
             }
             

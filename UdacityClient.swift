@@ -193,10 +193,19 @@ class UdacityClient : NSObject {
         }
     }
     
+    func clearAnnotations(mapView: MKMapView) {
+        
+        if mapView.annotations.count > 0 {
+            mapView.removeAnnotations(mapView.annotations)
+        }
+    }
+    
     func getUserData() {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(uniqueID)")!)
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
+                //Display error.localized blablabla
+                print(error!.localizedDescription)
                 return
             } else {
                 guard let data = data else {

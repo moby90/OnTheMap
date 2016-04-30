@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SimpleAlert {
-    
-    init(){}
+extension UIViewController {
     
     func showSimpleAlert(viewController: UIViewController, title: String, message: String) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)

@@ -11,7 +11,7 @@ import UIKit
 class ListTableViewController: UITableViewController {
     @IBOutlet var studentTableView: UITableView!
     
-    var students: [StudentInformation] = ParseClient.sharedInstance().studentLocations
+    var students: [StudentInformation] = StudentData.sharedInstance().usersData
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -22,7 +22,7 @@ class ListTableViewController: UITableViewController {
         ParseClient.sharedInstance().getStudentLocationsUsingCompletionHandler() { (success, errorString) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.students = ParseClient.sharedInstance().studentLocations
+                    self.students = StudentData.sharedInstance().usersData
                     self.studentTableView.reloadData()
                 })
             } else {

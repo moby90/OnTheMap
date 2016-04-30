@@ -96,12 +96,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         UdacityClient.sharedInstance().getStudentLocations { users, error in
             
             if error != nil {
-                SimpleAlert().showSimpleAlert(self, title: "Something happened.", message: error!.domain)
+                self.showSimpleAlert(self, title: "Something happened.", message: error!.domain)
             }
             
             if let usersData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
-                    StudentInformation.sharedInstance.usersData = usersData
+                    StudentData.sharedInstance().usersData = usersData
+                    UdacityClient.sharedInstance().clearAnnotations(self.map)
                     UdacityClient.sharedInstance().createAnnotations(usersData, mapView: self.map)
                 })
             }

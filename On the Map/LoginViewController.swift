@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 displayError("There was an error with your request: \(error)")
-                SimpleAlert().showSimpleAlert(self, title: "No internet connection", message: "Make sure you have a valid internet connection")
+                self.showSimpleAlert(self, title: "No internet connection", message: "Make sure you have a valid internet connection")
                 //self.showSimpleAlert("No internet connection", message: "Make sure you have a valid internet connection")
                 return
             }
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController {
                 }
                 
                 //self.showSimpleAlert("Could not connect", message: message)
-                SimpleAlert().showSimpleAlert(self, title: "Could not connect", message: message)
+                self.showSimpleAlert(self, title: "Could not connect", message: message)
             }
             
             guard let data = data else {

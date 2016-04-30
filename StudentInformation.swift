@@ -9,22 +9,16 @@
 import Foundation
 import MapKit
 
-class StudentInformation : NSObject {
+struct StudentInformation {
     
-    static let sharedInstance = StudentInformation()
-    
-    var usersData : [StudentInformation] = [StudentInformation]()
-    
-        var firstName = ""
-        var lastName = ""
-        var latitude : CLLocationDegrees = CLLocationDegrees()
-        var longitude : CLLocationDegrees = CLLocationDegrees()
-        var mediaURL = ""
-        var studentID = ""
-        var mapString = ""
-        var uniqueKey = ""
-    
-    override init(){}
+    var firstName = ""
+    var lastName = ""
+    var latitude : CLLocationDegrees = CLLocationDegrees()
+    var longitude : CLLocationDegrees = CLLocationDegrees()
+    var mediaURL = ""
+    var studentID = ""
+    var mapString = ""
+    var uniqueKey = ""
     
     init(dict : [String : AnyObject]){
             firstName = dict[Constants.JSONBodyKeys.FirstName] as! String
@@ -36,14 +30,14 @@ class StudentInformation : NSObject {
             uniqueKey = dict[Constants.JSONBodyKeys.UniqueKey] as! String!
     }
     
-        /* Convert an array of dictionaries to an array of student information struct objects */
-        static func convertFromDictionaries(array: [[String : AnyObject]]) -> [StudentInformation] {
-            var resultArray = [StudentInformation]()
+    /* Convert an array of dictionaries to an array of student information struct objects */
+    static func convertFromDictionaries(array: [[String : AnyObject]]) -> [StudentInformation] {
+        var resultArray = [StudentInformation]()
         
-            for dictionary in array {
-                resultArray.append(StudentInformation(dict: dictionary))
-            }
-        
-            return resultArray
+        for dictionary in array {
+            resultArray.append(StudentInformation(dict: dictionary))
         }
+    
+        return resultArray
+    }
 }
